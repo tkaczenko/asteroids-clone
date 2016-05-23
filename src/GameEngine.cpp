@@ -4,11 +4,8 @@ GameEngine::GameEngine()
 {
     win = new Window("Asteroids");
     rend = new Renderer(win->getWin());
-    nextFrameTime = SDL_GetTicks();
-
     srand(time(NULL));
     this->spawnRock(BIG_ROCK, 3);
-    this->mainLoop();
 }
 
 GameEngine::~GameEngine()
@@ -50,96 +47,6 @@ void GameEngine::spawnRock(const int& type, const int& number, const float& x, c
 
         rocks.insert(std::pair<std::string, Rock>(name, tempRock));
         rockNum++;
-    }
-}
-
-void GameEngine::mainLoop()
-{
-    std::cout << "Frames Drawn\tDelta\t\tInterpolation\n";
-    while (app.isRunning()) {
-        if (SDL_GetTicks() > dataOutputTimer + 1000) {
-            std::cout << drawCount << "\t\t" << deltaTime << "\t\t" << interpolation << "\n";
-            drawCount = 0;
-            dataOutputTimer = SDL_GetTicks();
-        }
-
-        if (SDL_GetTicks() > rockSpawnTimer + 15000) {
-            this->spawnRock(BIG_ROCK, 1);
-            rockSpawnTimer = SDL_GetTicks();
-        }
-
-        this->inputs();
-
-        loops = 0;
-        deltaTime = float(SDL_GetTicks() - prevFrameTime) / 1000.0f;
-
-        while (SDL_GetTicks() > nextFrameTime && loops < maxFrameSkip) {
-            this->updatePositions();
-
-            nextFrameTime += singleFrameTimeInMS;
-            prevFrameTime = SDL_GetTicks();
-            loops++;
-        }
-
-        interpolation = float(SDL_GetTicks() + singleFrameTimeInMS - nextFrameTime) / float(singleFrameTimeInMS);
-        int ip = int(interpolation * 10);
-
-        this->collisions();
-
-        if (true) {
-            this->interpolate();
-            prevIntpol = ip;
-            this->draw();
-        }
-    }
-}
-
-void GameEngine::inputs()
-{
-    while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
-            app.exit();
-        } else if (event.type == SDL_WINDOWEVENT) {
-            if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
-                SDL_Event focus;
-                focus.type = SDL_WINDOWEVENT;
-                focus.window.event = SDL_WINDOWEVENT_FOCUS_GAINED;
-                SDL_WaitEvent(&focus);
-            }
-        }
-        if (player.isAlive()) {
-            if (event.type == SDL_KEYDOWN) {
-                if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
-                    player.thrusting(true);
-                }
-                if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-                    player.rotate(Ship::LEFT);
-                } else if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-                    player.rotate(Ship::RIGHT);
-                }
-                if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
-                    if (player.isLoaded()) {
-                        player.fire();
-                        player.loaded(false);
-                    }
-                }
-            }
-        }
-        if (event.type == SDL_KEYUP) {
-            if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
-                player.thrusting(false);
-            }
-            if (event.key.keysym.scancode == SDL_SCANCODE_LEFT ||
-                event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-                player.rotate(Ship::NONE);
-            }
-            if (event.key.keysym.scancode == SDL_SCANCODE_A) {
-                player.setAlive(true);
-            }
-            if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
-                player.loaded(true);
-            }
-        }
     }
 }
 
@@ -185,7 +92,7 @@ void GameEngine::collisions()
     }
 }
 
-void GameEngine::updatePositions()
+void GameEngine::updatePositions(const float& deltaTime)
 {
     player.updatePosition(deltaTime);
 
@@ -195,7 +102,7 @@ void GameEngine::updatePositions()
     }
 }
 
-void GameEngine::interpolate()
+void GameEngine::interpolate(const float& deltaTime, const float& interpolation)
 {
     player.interpolate(deltaTime, interpolation);
 
@@ -216,5 +123,4 @@ void GameEngine::draw()
     }
 
     rend->present();
-    drawCount++;
 }

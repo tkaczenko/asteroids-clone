@@ -1,9 +1,10 @@
 #include <SDL2/SDL.h>
 
-#include "../include/GameEngine.h"
+#include "../include/App.h"
 
 int main(int argc, char* args[])
 {
-    GameEngine game;
-    return 0;
+    App app;
+
+    return app.execute();
 }
