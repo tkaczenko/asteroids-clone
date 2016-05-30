@@ -3,7 +3,6 @@
 class Drawable
 {
 public:
-    virtual ~Drawable() { };
     virtual void trace() = 0;
     virtual void updatePosition(const float& dT) = 0;
     virtual void interpolate(const float& dT, const float& i) = 0;

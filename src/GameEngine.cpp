@@ -2,16 +2,12 @@
 
 GameEngine::GameEngine()
 {
-    win = new Window("Asteroids");
-    rend = new Renderer(win->getWin());
-    srand(time(NULL));
     this->spawnRock(BIG_ROCK, 3);
 }
 
 GameEngine::~GameEngine()
 {
-    delete win;
-    delete rend;
+
 }
 
 void GameEngine::spawnRock(const int& type, const int& number, const float& x, const float& y)
@@ -78,11 +74,11 @@ void GameEngine::collisions()
                     rocks.erase(rock_it);
                     player.bullets.erase(bul_it++);
 
-                    if (rock_it->second.type == BIG_ROCK) {
+                    if (rock_it->second.getType() == BIG_ROCK) {
                         this->spawnRock(MED_ROCK, 4, rock_it->second.getPosition().x, rock_it->second.getPosition().y);
-                    } else if (rock_it->second.type == MED_ROCK) {
+                    } else if (rock_it->second.getType() == MED_ROCK) {
                         this->spawnRock(SMALL_ROCK, 2, rock_it->second.getPosition().x, rock_it->second.getPosition().y);
-                    } else if (rock_it->second.type == SMALL_ROCK) {
+                    } else if (rock_it->second.getType() == SMALL_ROCK) {
 
                     }
                     goto BEGIN_MISSILE_COLLISION;
@@ -112,7 +108,7 @@ void GameEngine::interpolate(const float& deltaTime, const float& interpolation)
     }
 }
 
-void GameEngine::draw()
+void GameEngine::draw(Renderer *rend)
 {
     rend->clear();
     player.draw(rend->getRend());

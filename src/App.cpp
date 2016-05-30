@@ -3,20 +3,29 @@
 App::App()
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0 ) {
-        nextFrameTime = SDL_GetTicks();
+        std::cout << "Unable initialize SDL: " << SDL_GetError();
+        return;
     }
+    win = new Window("Asteroids");
+    rend = new Renderer(win->getWin());
+
+    nextFrameTime = SDL_GetTicks();
+    srand(time(NULL));
+
+    game = new GameEngine();
 }
 
 App::~App()
 {
+    delete win;
+    delete rend;
     delete game;
     SDL_Quit();
 }
 
 int App::execute()
 {
-    game = new GameEngine();
-    while (this->isRunning()) {
+    while (running) {
         if (SDL_GetTicks() > dataOutputTimer + 1000) {
             dataOutputTimer = SDL_GetTicks();
         }
@@ -47,7 +56,7 @@ int App::execute()
         if (true) {
             game->interpolate(deltaTime, interpolation);
             prevIntpol = ip;
-            game->draw();
+            game->draw(rend);
         }
     }
     return 0;
@@ -66,37 +75,37 @@ void App::inputs()
                 SDL_WaitEvent(&focus);
             }
         }
-        if (game->player.isAlive()) {
+        if (game->getShip()->isAlive()) {
             if (event.type == SDL_KEYDOWN) {
                 if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
-                    game->player.thrusting(true);
+                    game->getShip()->thrusting(true);
                 }
                 if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-                    game->player.rotate(Ship::LEFT);
+                    game->getShip()->rotate(Ship::LEFT);
                 } else if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-                    game->player.rotate(Ship::RIGHT);
+                    game->getShip()->rotate(Ship::RIGHT);
                 }
                 if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
-                    if (game->player.isLoaded()) {
-                        game->player.fire();
-                        game->player.loaded(false);
+                    if (game->getShip()->isLoaded()) {
+                        game->getShip()->fire();
+                        game->getShip()->loaded(false);
                     }
                 }
             }
         }
         if (event.type == SDL_KEYUP) {
             if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
-                game->player.thrusting(false);
+                game->getShip()->thrusting(false);
             }
             if (event.key.keysym.scancode == SDL_SCANCODE_LEFT ||
                 event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-                game->player.rotate(Ship::NONE);
+                game->getShip()->rotate(Ship::NONE);
             }
             if (event.key.keysym.scancode == SDL_SCANCODE_A) {
-                game->player.setAlive(true);
+                game->getShip()->setAlive(true);
             }
             if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
-                game->player.loaded(true);
+                game->getShip()->loaded(true);
             }
         }
     }

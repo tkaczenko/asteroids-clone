@@ -28,10 +28,10 @@ public:
     void draw(SDL_Renderer *r);
 
 private:
-    int type;
     int life = 0;
     int num = 0;
     int rNum = 0;
+    int type;
 
     SDL_Point position;
     SDL_Point prevPosition;

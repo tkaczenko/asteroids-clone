@@ -8,7 +8,6 @@
 #include <ctime>
 
 #include "../include/Globals.h"
-#include "../include/Window.h"
 #include "../include/Renderer.h"
 #include "../include/Ship.h"
 #include "../include/Rock.h"
@@ -24,12 +23,12 @@ public:
     void collisions();
     void updatePositions(const float& deltaTime);
     void interpolate(const float& deltaTime, const float& interpolation);
-    void draw();
+    void draw(Renderer *rend);
 
-    Ship player;
+    Ship* getShip() { return &player; }
+
 private:
-    Window* win = nullptr;
-    Renderer* rend = nullptr;
+    Ship player;
     std::map<std::string, Rock> rocks;
     int rockNum = 0;
 };

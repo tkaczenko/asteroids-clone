@@ -24,11 +24,14 @@ public:
     virtual void interpolate(const float& dT, const float& i) override;
     virtual void draw(SDL_Renderer *r) override;
 
-    int type;
+    void setType(int type) { this->type = type; }
+    int getType() { return type; }
+
 private:
     int life = 0;
     int num = 0;
     int rNum = 0;
+    int type;
 
     float angleVel = 0.0;
 

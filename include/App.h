@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../include/Project.h"
+#include "../include/Window.h"
+#include "../include/Renderer.h"
 #include "../include/GameEngine.h"
 
 class App
@@ -10,17 +12,20 @@ public:
     ~App();
 
     int execute();
-    void inputs();
-    bool isRunning() { return running; }
     void exit() { running = false; }
 
-    float deltaTime = 0;
-    float interpolation = 0;
 private:
-    GameEngine* game = nullptr;
+    void inputs();
+
+    Window *win = nullptr;
+    Renderer *rend = nullptr;
+    GameEngine *game = nullptr;
 
     bool running = true;
     SDL_Event event;
+
+    float deltaTime = 0;
+    float interpolation = 0;
 
     const int updatesPerSecond = 30;
     const int singleFrameTimeInMS = 1000 / updatesPerSecond;

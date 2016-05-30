@@ -35,6 +35,7 @@ public:
     virtual void updatePosition(const float& dT) override;
     virtual void interpolate(const float& dT, const float& i) override;
     virtual void draw(SDL_Renderer* r) override;
+
 private:
     SDL_Point *ship = NULL;
     SDL_Point *thruster = NULL;
