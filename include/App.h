@@ -19,7 +19,7 @@ private:
 
     Window *win = nullptr;
     Renderer *rend = nullptr;
-    GameEngine *game = nullptr;
+    GameEngine game;
 
     bool running = true;
     SDL_Event event;
@@ -35,7 +35,6 @@ private:
     Uint32 nextFrameTime = 0;
     Uint32 prevFrameTime = 0;
 
-    int prevIntpol = -1;
     Uint32 dataOutputTimer = 0;
 
     Uint32 rockSpawnTimer = 0;

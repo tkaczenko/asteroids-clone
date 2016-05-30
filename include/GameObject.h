@@ -8,6 +8,7 @@ class GameObject : public Drawable
 public:
     inline float* getVelocity() { return velocity; }
     inline SDL_Point getPosition() { return position; }
+
 protected:
     SDL_Point prevPosition;
     SDL_Point position;

@@ -22,6 +22,7 @@ public:
     }
 
     SDL_Window* getWin() const { return this->hwWin; }
+
 private:
     SDL_Window *hwWin = NULL;
 };

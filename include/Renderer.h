@@ -5,7 +5,6 @@
 class Renderer
 {
 public:
-    Renderer();
     Renderer(SDL_Window* win) { hwRend = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED); }
     ~Renderer() { SDL_DestroyRenderer(hwRend); }
 

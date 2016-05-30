@@ -12,14 +12,13 @@ App::App()
     nextFrameTime = SDL_GetTicks();
     srand(time(NULL));
 
-    game = new GameEngine();
 }
 
 App::~App()
 {
     delete win;
     delete rend;
-    delete game;
+
     SDL_Quit();
 }
 
@@ -31,7 +30,7 @@ int App::execute()
         }
 
         if (SDL_GetTicks() > rockSpawnTimer + 15000) {
-            game->spawnRock(BIG_ROCK, 1);
+            game.spawnRock(BIG_ROCK, 1);
             rockSpawnTimer = SDL_GetTicks();
         }
 
@@ -41,22 +40,17 @@ int App::execute()
         deltaTime = float(SDL_GetTicks() - prevFrameTime) / 1000.0f;
 
         while (SDL_GetTicks() > nextFrameTime && loops < maxFrameSkip) {
-            game->updatePositions(deltaTime);
+            game.updatePositions(deltaTime);
 
             nextFrameTime += singleFrameTimeInMS;
             prevFrameTime = SDL_GetTicks();
             loops++;
         }
-
         interpolation = float(SDL_GetTicks() + singleFrameTimeInMS - nextFrameTime) / float(singleFrameTimeInMS);
-        int ip = int(interpolation * 10);
-
-        game->collisions();
-
+        game.collisions();
         if (true) {
-            game->interpolate(deltaTime, interpolation);
-            prevIntpol = ip;
-            game->draw(rend);
+            game.interpolate(deltaTime, interpolation);
+            game.draw(rend);
         }
     }
     return 0;
@@ -75,37 +69,33 @@ void App::inputs()
                 SDL_WaitEvent(&focus);
             }
         }
-        if (game->getShip()->isAlive()) {
-            if (event.type == SDL_KEYDOWN) {
-                if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
-                    game->getShip()->thrusting(true);
-                }
-                if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-                    game->getShip()->rotate(Ship::LEFT);
-                } else if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-                    game->getShip()->rotate(Ship::RIGHT);
-                }
-                if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
-                    if (game->getShip()->isLoaded()) {
-                        game->getShip()->fire();
-                        game->getShip()->loaded(false);
-                    }
-                }
+        if (event.type == SDL_KEYDOWN) {
+            if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
+                game.actionShip(GameEngine::UP, true);
+            }
+            if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
+                game.actionShip(GameEngine::LEFT, true);
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+                game.actionShip(GameEngine::RIGHT, true);
+            }
+            if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
+                game.actionShip(GameEngine::FIRE, true);
             }
         }
+
         if (event.type == SDL_KEYUP) {
             if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
-                game->getShip()->thrusting(false);
+                game.actionShip(GameEngine::UP, false);
             }
             if (event.key.keysym.scancode == SDL_SCANCODE_LEFT ||
                 event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-                game->getShip()->rotate(Ship::NONE);
+                game.actionShip(GameEngine::LEFT, false);
             }
             if (event.key.keysym.scancode == SDL_SCANCODE_A) {
-                game->getShip()->setAlive(true);
+                game.actionShip(GameEngine::ALIVE, false);
             }
             if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
-                game->getShip()->loaded(true);
+                game.actionShip(GameEngine::FIRE, false);
             }
         }
     }

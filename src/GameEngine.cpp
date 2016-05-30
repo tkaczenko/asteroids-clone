@@ -10,6 +10,49 @@ GameEngine::~GameEngine()
 
 }
 
+void GameEngine::actionShip(const int& action, bool down)
+{
+    if (down) {
+        if (player.isAlive()) {
+            switch (action) {
+            case GameEngine::UP:
+                player.thrusting(true);
+                break;
+            case GameEngine::LEFT:
+                player.rotate(Ship::LEFT);
+                break;
+            case GameEngine::RIGHT:
+                player.rotate(Ship::RIGHT);
+                break;
+            case GameEngine::FIRE:
+                if (player.isLoaded()) {
+                    player.fire();
+                    player.loaded(false);
+                }
+                break;
+            }
+        }
+    } else {
+        switch (action) {
+        case GameEngine::UP:
+            player.thrusting(false);
+            break;
+        case GameEngine::LEFT:
+            player.rotate(Ship::NONE);
+            break;
+        case GameEngine::RIGHT:
+            player.rotate(Ship::NONE);
+            break;
+        case GameEngine::FIRE:
+            player.loaded(true);
+            break;
+        case GameEngine::ALIVE:
+            player.setAlive(true);
+            break;
+        }
+    }
+}
+
 void GameEngine::spawnRock(const int& type, const int& number, const float& x, const float& y)
 {
     for (int numRocks = 0; numRocks != number; numRocks++) {
