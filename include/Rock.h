@@ -13,17 +13,15 @@
 class Rock : public GameObject
 {
 public:
-    Rock();
     Rock(SDL_Point p, const float& vX, const float& vY, const int& t, const int& n);
     ~Rock();
-
-    inline SDL_Point* getLines() { return lines; }
 
     virtual void trace() override;
     virtual void updatePosition(const float& dT) override;
     virtual void interpolate(const float& dT, const float& i) override;
     virtual void draw(SDL_Renderer *r) override;
 
+    inline SDL_Point* getLines() { return lines; }
     void setType(int type) { this->type = type; }
     int getType() { return type; }
 

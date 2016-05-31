@@ -94,7 +94,7 @@ void GameEngine::collisions()
     for (int i=0; i != 3; i++) {
         for (auto rock_it = rocks.begin(); rock_it != rocks.end(); rock_it++) {
             for(int j=0; j != 9; j++) {
-                if ( SDL_IntersectRectAndLine(&player.colPoints[i],
+                if ( SDL_IntersectRectAndLine(&player.getColPoints()[i],
                                                 &rock_it->second.getLines()[j].x,
                                                 &rock_it->second.getLines()[j].y,
                                                 &rock_it->second.getLines()[j+1].x,
@@ -105,7 +105,7 @@ void GameEngine::collisions()
         }
     }
     BEGIN_MISSILE_COLLISION:
-    for (auto bul_it = player.bullets.begin(); bul_it != player.bullets.end(); bul_it++) {
+    for (auto bul_it = player.getBullets()->begin(); bul_it != player.getBullets()->end(); bul_it++) {
         SDL_Rect bul = {bul_it->second.getPosition().x, bul_it->second.getPosition().y, 10, 10};
         for (auto rock_it = rocks.begin(); rock_it != rocks.end(); rock_it++) {
             for(int j=0; j != 9; j++) {
@@ -115,7 +115,7 @@ void GameEngine::collisions()
                                                 &rock_it->second.getLines()[j+1].x,
                                                 &rock_it->second.getLines()[j+1].y) ) {
                     rocks.erase(rock_it);
-                    player.bullets.erase(bul_it++);
+                    player.getBullets()->erase(bul_it++);
 
                     if (rock_it->second.getType() == BIG_ROCK) {
                         this->spawnRock(MED_ROCK, 4, rock_it->second.getPosition().x, rock_it->second.getPosition().y);

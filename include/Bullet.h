@@ -14,18 +14,17 @@
 class Bullet
 {
 public:
-    Bullet();
     Bullet(SDL_Point p, const float& vX, const float& vY, const int& t, const int& n);
     ~Bullet();
-
-    inline float* getVelocity() { return velocity; }
-    inline SDL_Point getPosition() { return position; }
 
     void update(const float& dT, std::map<std::string, Bullet>& m);
     void trace() { };
     void updatePosition(const float& dT) { };
     void interpolate(const float& dT, const float& i);
     void draw(SDL_Renderer *r);
+
+    inline float* getVelocity() { return velocity; }
+    inline SDL_Point getPosition() { return position; }
 
 private:
     int life = 0;

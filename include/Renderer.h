@@ -13,8 +13,8 @@ public:
         SDL_SetRenderDrawColor(hwRend, 0, 0, 0, 255);
         SDL_RenderClear(hwRend);
     }
-
     void present() { SDL_RenderPresent(hwRend); }
+
     SDL_Renderer* getRend() const { return this->hwRend; }
 
 private:

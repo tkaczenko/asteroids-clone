@@ -81,7 +81,7 @@ void Ship::trace()
                     2,2};
 }
 
-void Ship::deadAnim()
+void Ship::deadAnimation()
 {
     velocity[0] = 0;
     velocity[1] = 0;
@@ -142,7 +142,7 @@ void Ship::interpolate(const float& dT, const float& i)
     if (alive) {
         this->trace();
     } else {
-        this->deadAnim();
+        this->deadAnimation();
     }
 
     for (auto j = bullets.begin(); j != bullets.end(); j++)
