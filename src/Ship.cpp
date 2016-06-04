@@ -1,4 +1,6 @@
 #include "../include/Ship.h"
+#include <cmath>
+#include <algorithm>
 
 Ship::Ship()
 {
@@ -23,8 +25,8 @@ Ship::~Ship()
 
 void Ship::fire()
 {
-    SDL_Point p = {int(cosA * (position.x-10 - position.x) - sinA * (position.y - position.y) + position.x),
-                    int(sinA * (position.x-10 - position.x) + cosA * (position.y - position.y) + position.y)};
+    SDL_Point p = {int(cosA * 10 + position.x),
+                   int(sinA * 10 + position.y)};
 
     float vX = velocity[0] + 500 * cosA;
     float vY = velocity[1] + 500 * sinA;
@@ -127,6 +129,12 @@ void Ship::updatePosition(const float& dt)
     }
     if (position.y < 0) {
         position.y += 600;
+    }
+    for (auto i = bullets.begin(); i != bullets.end(); ) {
+        if ((i -> second).isDead())
+            i = bullets.erase(i);
+        else
+            ++i;
     }
     for (auto i = bullets.begin(); i != bullets.end(); i++) {
         i->second.update(dt, bullets);
