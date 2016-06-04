@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <cstdlib>
+#include <cmath>
 
 #include "../include/Project.h"
 #include "Globals.h"
