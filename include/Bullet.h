@@ -11,7 +11,7 @@
 #include "Globals.h"
 #include "GameObject.h"
 
-class Bullet
+class Bullet : public GameObject
 {
 public:
     Bullet(SDL_Point p, const float& vX, const float& vY, const int& t, const int& n);
@@ -26,11 +26,15 @@ public:
     inline float* getVelocity() { return velocity; }
     inline SDL_Point getPosition() { return position; }
 
+    bool isDead() const;
+
 private:
     int life = 0;
     int num = 0;
     int rNum = 0;
     int type;
+
+    bool dead;
 
     SDL_Point position;
     SDL_Point prevPosition;

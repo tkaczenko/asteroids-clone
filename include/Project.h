@@ -20,6 +20,10 @@
  * Project->Properties->Project's build options->Linker settings
  * Other Linker options: -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 */
+<<<<<<< HEAD
 //#include <SDL2/SDL.h>
+=======
+#include <SDL.h>
+>>>>>>> b8245c0d82ab7a6ad6468890e448e0fc80d083ce
 
 

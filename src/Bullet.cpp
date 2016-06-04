@@ -1,7 +1,7 @@
 #include "../include/Bullet.h"
 
 Bullet::Bullet(SDL_Point p, const float& vX, const float& vY, const int& t, const int& n)
-: num(n), type(t)
+: num(n), type(t), dead(false)
 {
     position = {p.x, p.y};
     prevPosition = {p.x, p.y};
@@ -36,10 +36,7 @@ void Bullet::update(const float& dT, std::map<std::string, Bullet>& m)
 
     if (type == BULLET) {
         if (life > 25) {
-            std::stringstream ss;
-            ss << num;
-            std::string temp = "bullet" + ss.str();
-            m.erase(temp);
+            dead = true;
         } else {
             life++;
         }
@@ -47,6 +44,10 @@ void Bullet::update(const float& dT, std::map<std::string, Bullet>& m)
 
     prevPosition.x = position.x;
     prevPosition.y = position.y;
+}
+
+bool Bullet::isDead() const {
+    return dead;
 }
 
 void Bullet::interpolate(const float& dT, const float& i)
