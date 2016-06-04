@@ -7,8 +7,8 @@
  * Project->Properties->Project's build options->Linker settings
  * Other Linker options: -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 */
-/**
 #include <SDL.h>
+/**
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
@@ -20,6 +20,6 @@
  * Project->Properties->Project's build options->Linker settings
  * Other Linker options: -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 */
-#include <SDL2/SDL.h>
+//#include <SDL2/SDL.h>
 
 

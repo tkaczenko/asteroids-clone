@@ -23,8 +23,8 @@ Ship::~Ship()
 
 void Ship::fire()
 {
-    SDL_Point p = {int(cosA * (position.x-10 - position.x) - sinA * (position.y - position.y) + position.x),
-                    int(sinA * (position.x-10 - position.x) + cosA * (position.y - position.y) + position.y)};
+    SDL_Point p = {int(cosA * (-10) - sinA + position.x),
+                    int(sinA * (-10) + cosA + position.y)};
 
     float vX = velocity[0] + 500 * cosA;
     float vY = velocity[1] + 500 * sinA;
@@ -44,40 +44,40 @@ void Ship::trace()
     cosA = cos(angle);
     sinA = sin(angle);
 
-    ship[0] = {int(cosA * (position.x-10 - position.x) - sinA * (position.y - position.y) + position.x),
-                int(sinA * (position.x-10 - position.x) + cosA * (position.y - position.y) + position.y)};
+    ship[0] = {int(cosA * (-10) - sinA + position.x),
+                int(sinA * (-10) + cosA + position.y)};
 
-    ship[1] = {int(cosA * (position.x+10 - position.x) - sinA * (position.y-10 - position.y) + position.x),
-                int(sinA * (position.x+10 - position.x) + cosA * (position.y-10 - position.y) + position.y)};
+    ship[1] = {int(cosA * (+10) - sinA * (-10) + position.x),
+                int(sinA * (+10) + cosA * (-10) + position.y)};
 
-    ship[2] = {int(cosA * (position.x+5 - position.x) - sinA * (position.y - position.y) + position.x),
-                int(sinA * (position.x+5 - position.x) + cosA * (position.y - position.y) + position.y)};
+    ship[2] = {int(cosA * (+5) - sinA + position.x),
+                int(sinA * (+5) + cosA + position.y)};
 
-    ship[3] = {int(cosA * (position.x+10 - position.x) - sinA * (position.y+10 - position.y) + position.x),
-                int(sinA * (position.x+10 - position.x) + cosA * (position.y+10 - position.y) + position.y)};
+    ship[3] = {int(cosA * (+10) - sinA * (+10) + position.x),
+                int(sinA * (+10) + cosA * (+10) + position.y)};
 
-    ship[4] = {int(cosA * (position.x-10 - position.x) - sinA * (position.y - position.y) + position.x),
-                int(sinA * (position.x-10 - position.x) + cosA * (position.y - position.y) + position.y)};
+    ship[4] = {int(cosA * (-10) - sinA + position.x),
+                int(sinA * (-10) + cosA + position.y)};
 
-    thruster[0] = {int(cosA * (position.x+8 - position.x) - sinA * (position.y+5 - position.y) + position.x),
-                    int(sinA * (position.x+8 - position.x) + cosA * (position.y+5 - position.y) + position.y)};
+    thruster[0] = {int(cosA * (+8) - sinA * (+5) + position.x),
+                    int(sinA * (+8) + cosA * (+5) + position.y)};
 
-    thruster[1] = {int(cosA * (position.x+15 - position.x) - sinA * (position.y - position.y) + position.x),
-                    int(sinA * (position.x+15 - position.x) + cosA * (position.y - position.y) + position.y)};
+    thruster[1] = {int(cosA * (+15) - sinA + position.x),
+                    int(sinA * (+15) + cosA + position.y)};
 
-    thruster[2] = {int(cosA * (position.x+8 - position.x) - sinA * (position.y-5 - position.y) + position.x),
-                    int(sinA * (position.x+8 - position.x) + cosA * (position.y-5 - position.y) + position.y)};
+    thruster[2] = {int(cosA * (+8) - sinA * (-5) + position.x),
+                    int(sinA * (+8) + cosA * (-5) + position.y)};
 
-    colPoints[0] = {int(cosA * (position.x-10 - position.x) - sinA * (position.y-0 - position.y) + position.x),
-                    int(sinA * (position.x-10 - position.x) + cosA * (position.y-0 - position.y) + position.y),
+    colPoints[0] = {int(cosA * (-10) - sinA + position.x),
+                    int(sinA * (-10) + cosA + position.y),
                     2,2};
 
-    colPoints[1] = {int(cosA * (position.x+10 - position.x) - sinA * (position.y-10 - position.y) + position.x),
-                    int(sinA * (position.x+10 - position.x) + cosA * (position.y-10 - position.y) + position.y),
+    colPoints[1] = {int(cosA * (+10) - sinA * (-10) + position.x),
+                    int(sinA * (+10) + cosA * (-10) + position.y),
                     2,2};
 
-    colPoints[2] = {int(cosA * (position.x+10 - position.x) - sinA * (position.y+10 - position.y) + position.x),
-                    int(sinA * (position.x+10 - position.x) + cosA * (position.y+10 - position.y) + position.y),
+    colPoints[2] = {int(cosA * (+10) - sinA * (+10) + position.x),
+                    int(sinA * (+10) + cosA * (+10) + position.y),
                     2,2};
 }
 

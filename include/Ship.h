@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include <cmath>
 
 #include "../include/Project.h"
 #include "Bullet.h"
