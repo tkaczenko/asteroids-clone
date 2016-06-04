@@ -9,6 +9,7 @@ Ship::Ship()
     ship = new SDL_Point[5];
     thruster = new SDL_Point[3];
     colPoints = new SDL_Rect[3];
+    coefArr = readConfig("config/Ship.txt");
 
     velocity[0] = 0.0;
     velocity[1] = 0.0;
@@ -18,15 +19,15 @@ Ship::Ship()
 
 Ship::~Ship()
 {
-    delete ship;
-    delete thruster;
-    delete colPoints;
+    delete[] ship;
+    delete[] thruster;
+    delete[] colPoints;
+    delete[] coefArr;
 }
 
 void Ship::fire()
 {
-    SDL_Point p = {int(cosA * (-10) - sinA + position.x),
-                    int(sinA * (-10) + cosA + position.y)};
+    SDL_Point p = baseFormula(coefArr[0][0], coefArr[0][1], coefArr[0][2], coefArr[0][3]);
 
     float vX = velocity[0] + 500 * cosA;
     float vY = velocity[1] + 500 * sinA;
@@ -46,41 +47,22 @@ void Ship::trace()
     cosA = cos(angle);
     sinA = sin(angle);
 
-    ship[0] = {int(cosA * (-10) - sinA + position.x),
-                int(sinA * (-10) + cosA + position.y)};
-
-    ship[1] = {int(cosA * (+10) - sinA * (-10) + position.x),
-                int(sinA * (+10) + cosA * (-10) + position.y)};
-
-    ship[2] = {int(cosA * (+5) - sinA + position.x),
-                int(sinA * (+5) + cosA + position.y)};
-
-    ship[3] = {int(cosA * (+10) - sinA * (+10) + position.x),
-                int(sinA * (+10) + cosA * (+10) + position.y)};
-
-    ship[4] = {int(cosA * (-10) - sinA + position.x),
-                int(sinA * (-10) + cosA + position.y)};
-
-    thruster[0] = {int(cosA * (+8) - sinA * (+5) + position.x),
-                    int(sinA * (+8) + cosA * (+5) + position.y)};
-
-    thruster[1] = {int(cosA * (+15) - sinA + position.x),
-                    int(sinA * (+15) + cosA + position.y)};
-
-    thruster[2] = {int(cosA * (+8) - sinA * (-5) + position.x),
-                    int(sinA * (+8) + cosA * (-5) + position.y)};
-
-    colPoints[0] = {int(cosA * (-10) - sinA + position.x),
-                    int(sinA * (-10) + cosA + position.y),
-                    2,2};
-
-    colPoints[1] = {int(cosA * (+10) - sinA * (-10) + position.x),
-                    int(sinA * (+10) + cosA * (-10) + position.y),
-                    2,2};
-
-    colPoints[2] = {int(cosA * (+10) - sinA * (+10) + position.x),
-                    int(sinA * (+10) + cosA * (+10) + position.y),
-                    2,2};
+    int i = 0;
+    for (; i < 5; i++) {
+        ship[i] = baseFormula(coefArr[i][0], coefArr[i][1], coefArr[i][2], coefArr[i][3]);
+    }
+    i = 5;
+    for (int j = 0; j < 3; j++) {
+        thruster[j] = baseFormula(coefArr[i][0], coefArr[i][1], coefArr[i][2], coefArr[i][3]);
+        i++;
+    }
+    for (int j = 0; j < 3; j++) {
+        colPoints[j].x = baseFormula(coefArr[i][0], coefArr[i][1], coefArr[i][2], coefArr[i][3]).x;
+        colPoints[j].y = baseFormula(coefArr[i][0], coefArr[i][1], coefArr[i][2], coefArr[i][3]).y;
+        colPoints[j].w = 2;
+        colPoints[j].h = 2;
+        i++;
+    }
 }
 
 void Ship::deadAnimation()

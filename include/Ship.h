@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <cmath>
+#include <fstream>
 
 #include "../include/Project.h"
 #include "Bullet.h"
@@ -37,8 +38,8 @@ public:
 
     SDL_Rect* getColPoints() { return colPoints; }
     std::map<std::string, Bullet>* getBullets() { return &bullets; }
-
 private:
+    int** coefArr = nullptr;
     SDL_Rect *colPoints = NULL;
     std::map<std::string, Bullet> bullets;
     SDL_Point *ship = NULL;
