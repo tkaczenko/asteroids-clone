@@ -6,7 +6,6 @@ Rock::Rock(SDL_Point p, const float& vX, const float& vY, const int& t, const in
     position = {p.x, p.y};
     prevPosition = {p.x, p.y};
     rNum = rand() % 4;
-
     angle = (rand() % 314) / 100;
     if (num % 2 == 0) {
       angleVel = .01;

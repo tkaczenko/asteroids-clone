@@ -27,7 +27,6 @@ public:
     int getType() { return type; }
 
 private:
-    int** coefArr = nullptr;
     int life = 0;
     int num = 0;
     int rNum = 0;
