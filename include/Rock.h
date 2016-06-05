@@ -22,8 +22,8 @@ public:
     virtual void interpolate(const float& dT, const float& i);
     virtual void draw(SDL_Renderer *r);
 
-    inline SDL_Point* getLines() { return lines; }
     void setType(int type) { this->type = type; }
+    inline SDL_Point* getLines() { return lines; }
     int getType() { return type; }
 private:
     void generate(int radius, double rotAngle);
