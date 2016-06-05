@@ -29,7 +29,5 @@ Linker options:
     -lmingw32 -lSDL2main -lSDL2
 
 ## UML diagrams
-### Class Diagram
-![here] (/Class Diagram.png "UML class diagram")
-### Sequance Diagram
-![here] (/Sequence Diagram.png "UML sequance diagram")
+* [Class Diagram] (https://raw.githubusercontent.com/tkacz-/asteroids-clone/master/Class%20Diagram.png)
+* [Sequance Diagram] (https://raw.githubusercontent.com/tkacz-/asteroids-clone/master/Sequence%20Diagram.png)
