@@ -8,6 +8,7 @@
 #include <cmath>
 
 #include "../include/Project.h"
+#include "../include/RockSettings.h"
 #include "Globals.h"
 #include "GameObject.h"
 
@@ -27,12 +28,15 @@ public:
     int getType() { return type; }
 
 private:
+    void generate(int radius, double rotAngle);
+    void generateDeviation();
     int life = 0;
     int num = 0;
     int rNum = 0;
     int type;
+    double deviation[ROCK_PARTS + 1];
 
     float angleVel = 0.0;
 
-    SDL_Point lines[10];
+    SDL_Point lines[ROCK_PARTS + 1];
 };

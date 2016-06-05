@@ -1,4 +1,5 @@
 #include "../include/GameEngine.h"
+#include "../include/RockSettings.h"
 
 GameEngine::GameEngine()
 {
@@ -93,7 +94,7 @@ void GameEngine::collisions()
 {
     for (int i=0; i != 3; i++) {
         for (auto rock_it = rocks.begin(); rock_it != rocks.end(); rock_it++) {
-            for(int j=0; j != 9; j++) {
+            for(int j = 0; j < ROCK_PARTS; j++) {
                 if ( SDL_IntersectRectAndLine(&player.getColPoints()[i],
                                                 &rock_it->second.getLines()[j].x,
                                                 &rock_it->second.getLines()[j].y,
@@ -108,7 +109,7 @@ void GameEngine::collisions()
     for (auto bul_it = player.getBullets()->begin(); bul_it != player.getBullets()->end(); bul_it++) {
         SDL_Rect bul = {bul_it->second.getPosition().x, bul_it->second.getPosition().y, 10, 10};
         for (auto rock_it = rocks.begin(); rock_it != rocks.end(); rock_it++) {
-            for(int j=0; j != 9; j++) {
+            for(int j = 0; j < ROCK_PARTS; j++) {
                 if ( SDL_IntersectRectAndLine(&bul,
                                                 &rock_it->second.getLines()[j].x,
                                                 &rock_it->second.getLines()[j].y,
