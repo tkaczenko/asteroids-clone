@@ -11,7 +11,6 @@ App::App()
 
     nextFrameTime = SDL_GetTicks();
     srand(time(NULL));
-
 }
 
 App::~App()
@@ -70,28 +69,33 @@ void App::inputs()
             }
         }
         if (event.type == SDL_KEYDOWN) {
-            if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
+            if (event.key.keysym.scancode == SDL_SCANCODE_UP ||
+                event.key.keysym.scancode == SDL_SCANCODE_W) {
                 game.actionShip(GameEngine::UP, true);
             }
-            if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
+            if (event.key.keysym.scancode == SDL_SCANCODE_LEFT ||
+                event.key.keysym.scancode == SDL_SCANCODE_A) {
                 game.actionShip(GameEngine::LEFT, true);
-            } else if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+            } else if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT ||
+                        event.key.keysym.scancode == SDL_SCANCODE_D) {
                 game.actionShip(GameEngine::RIGHT, true);
             }
             if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
                 game.actionShip(GameEngine::FIRE, true);
             }
         }
-
         if (event.type == SDL_KEYUP) {
-            if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
+            if (event.key.keysym.scancode == SDL_SCANCODE_UP ||
+                event.key.keysym.scancode == SDL_SCANCODE_W) {
                 game.actionShip(GameEngine::UP, false);
             }
             if (event.key.keysym.scancode == SDL_SCANCODE_LEFT ||
-                event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+                event.key.keysym.scancode == SDL_SCANCODE_RIGHT ||
+                event.key.keysym.scancode == SDL_SCANCODE_A ||
+                event.key.keysym.scancode == SDL_SCANCODE_D) {
                 game.actionShip(GameEngine::LEFT, false);
             }
-            if (event.key.keysym.scancode == SDL_SCANCODE_A) {
+            if (event.key.keysym.scancode == SDL_SCANCODE_R) {
                 game.actionShip(GameEngine::ALIVE, false);
             }
             if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {

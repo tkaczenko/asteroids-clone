@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "../include/Project.h"
-#include "../include/Globals.h"
+#include "Project.h"
+#include "Globals.h"
 
 class Window
 {
@@ -22,7 +22,6 @@ public:
     }
 
     SDL_Window* getWin() const { return this->hwWin; }
-
 private:
     SDL_Window *hwWin = NULL;
 };

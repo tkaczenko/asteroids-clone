@@ -25,23 +25,6 @@ Ship::~Ship()
     delete[] coefArr;
 }
 
-void Ship::fire()
-{
-    SDL_Point p = baseFormula(coefArr[0][0], coefArr[0][1], coefArr[0][2], coefArr[0][3]);
-
-    float vX = velocity[0] + 500 * cosA;
-    float vY = velocity[1] + 500 * sinA;
-
-    std::stringstream ss;
-    ss << bulletNum;
-    std::string name = "bullet" + ss.str();
-
-    Bullet sp = {p, vX, vY, BULLET, bulletNum};
-
-    bullets.insert(std::pair<std::string, Bullet>(name, sp));
-    bulletNum++;
-}
-
 void Ship::trace()
 {
     cosA = cos(angle);
@@ -56,19 +39,16 @@ void Ship::trace()
         thruster[j] = baseFormula(coefArr[i][0], coefArr[i][1], coefArr[i][2], coefArr[i][3]);
         i++;
     }
-    for (int j = 0; j < 3; j++) {
-        colPoints[j].x = baseFormula(coefArr[i][0], coefArr[i][1], coefArr[i][2], coefArr[i][3]).x;
-        colPoints[j].y = baseFormula(coefArr[i][0], coefArr[i][1], coefArr[i][2], coefArr[i][3]).y;
+    for (int j = 0; j < 2; j++) {
+        colPoints[j].x = ship[j].x;
+        colPoints[j].y = ship[j].y;
         colPoints[j].w = 2;
         colPoints[j].h = 2;
-        i++;
     }
-}
-
-void Ship::deadAnimation()
-{
-    velocity[0] = 0;
-    velocity[1] = 0;
+    colPoints[2].x = ship[3].x;
+    colPoints[2].y = ship[3].y;
+    colPoints[2].w = 2;
+    colPoints[2].h = 2;
 }
 
 void Ship::updatePosition(const float& dt)
@@ -119,7 +99,7 @@ void Ship::updatePosition(const float& dt)
             ++i;
     }
     for (auto i = bullets.begin(); i != bullets.end(); i++) {
-        i->second.update(dt, bullets);
+        i->second.updatePosition(dt, bullets);
     }
     prevPosition.x = position.x;
     prevPosition.y = position.y;
@@ -149,7 +129,7 @@ void Ship::draw(SDL_Renderer* r)
     {
         if (thrust) {
             SDL_RenderDrawLines(r, ship, 5);
-            SDL_SetRenderDrawColor(r, 255, 0, 0, 1.0);
+            SDL_SetRenderDrawColor(r, 255, 255, 0, 0);
             SDL_RenderDrawLines(r, thruster, 3);
         } else {
             SDL_RenderDrawLines(r, ship, 5);
@@ -159,3 +139,56 @@ void Ship::draw(SDL_Renderer* r)
         }
     }
 }
+
+void Ship::fire()
+{
+    SDL_Point p = baseFormula(coefArr[0][0], coefArr[0][1], coefArr[0][2], coefArr[0][3]);
+
+    float vX = velocity[0] + 500 * cosA;
+    float vY = velocity[1] + 500 * sinA;
+
+    std::stringstream ss;
+    ss << bulletNum;
+    std::string name = "bullet" + ss.str();
+
+    Bullet sp = {p, vX, vY, BULLET, bulletNum};
+
+    bullets.insert(std::pair<std::string, Bullet>(name, sp));
+    bulletNum++;
+}
+
+void Ship::deadAnimation()
+{
+    velocity[0] = 0;
+    velocity[1] = 0;
+}
+
+SDL_Point Ship::baseFormula(const int& a, const int& b, const int& c, const int& d)
+{
+    return {int(cosA * a - sinA * b + position.x),
+                int(sinA * c + cosA * d + position.y)};
+}
+
+int** Ship::readConfig(const std::string& filename)
+{
+    std::ifstream config (filename);
+    if (config.is_open()) {
+        int countM;
+        int countN;
+        config >> countM;
+        config >> countN;
+        int **arr = new int*[countM];
+        for (int i = 0; i < countM; i++) {
+            arr[i] = new int[countN];
+            for (int j = 0; j < countN; j++) {
+                config >> arr[i][j];
+            }
+        }
+        config.close();
+        return arr;
+    } else {
+        std::cout << "Error: Not found config file at " << filename << std::endl;
+        return nullptr;
+    }
+}
+

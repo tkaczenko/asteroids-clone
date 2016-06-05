@@ -5,16 +5,17 @@ Rock::Rock(SDL_Point p, const float& vX, const float& vY, const int& t, const in
 {
     position = {p.x, p.y};
     prevPosition = {p.x, p.y};
-    rNum = rand() % 4;
     angle = (rand() % 314) / 100;
     if (num % 2 == 0) {
-      angleVel = 0.01;
+        angleVel = 0.01;
     } else {
-      angleVel = -0.01;
+        angleVel = -0.01;
     }
 
     velocity[0] = vX;
     velocity[1] = vY;
+
+    color = {Uint8(rand() % 255), Uint8(rand() % 255), Uint8(rand() % 255)};
 
     generateDeviation();
 }
@@ -22,6 +23,21 @@ Rock::Rock(SDL_Point p, const float& vX, const float& vY, const int& t, const in
 Rock::~Rock()
 {
 
+}
+
+void Rock::trace()
+{
+    switch (type) {
+    case BIG_ROCK:
+        generate(ROCK_BIG_RADIUS, angle);
+        break;
+    case MED_ROCK:
+        generate(ROCK_MED_RADIUS, angle);
+        break;
+    case SMALL_ROCK:
+        generate(ROCK_SMALL_RADIUS, angle);
+        break;
+    }
 }
 
 void Rock::updatePosition(const float& dT)
@@ -58,26 +74,9 @@ void Rock::interpolate(const float& dT, const float& i)
 
 void Rock::draw(SDL_Renderer* r)
 {
-    SDL_SetRenderDrawColor(r, 255, 255, 0, 255);
+    SDL_SetRenderDrawColor(r, color.r, color.g, color.b, 0);
     SDL_RenderDrawLines(r, lines, ROCK_PARTS + 1);
     SDL_SetRenderDrawColor(r, 0, 0, 0, 255);
-}
-
-void Rock::trace()
-{
-    //cosA = cos(angle);
-    //sinA = sin(angle);
-    switch (type) {
-    case BIG_ROCK:
-        generate(ROCK_BIG_RADIUS, angle);
-        break;
-    case MED_ROCK:
-        generate(ROCK_MED_RADIUS, angle);
-        break;
-    case SMALL_ROCK:
-        generate(ROCK_SMALL_RADIUS, angle);
-        break;
-    }
 }
 
 void Rock::generate(int radius, double rotAngle) {

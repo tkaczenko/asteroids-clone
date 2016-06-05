@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../include/Project.h"
+#include "Project.h"
 
 class Renderer
 {
@@ -14,9 +14,7 @@ public:
         SDL_RenderClear(hwRend);
     }
     void present() { SDL_RenderPresent(hwRend); }
-
     SDL_Renderer* getRend() const { return this->hwRend; }
-
 private:
     SDL_Renderer* hwRend = NULL;
 };

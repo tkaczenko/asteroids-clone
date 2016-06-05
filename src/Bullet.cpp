@@ -18,7 +18,7 @@ Bullet::~Bullet()
 
 }
 
-void Bullet::update(const float& dT, std::map<std::string, Bullet>& m)
+void Bullet::updatePosition(const float& dT, std::map<std::string, Bullet>& m)
 {
     position.x = prevPosition.x - velocity[0] * dT;
     position.y = prevPosition.y - velocity[1] * dT;
@@ -46,10 +46,6 @@ void Bullet::update(const float& dT, std::map<std::string, Bullet>& m)
     prevPosition.y = position.y;
 }
 
-bool Bullet::isDead() const {
-    return dead;
-}
-
 void Bullet::interpolate(const float& dT, const float& i)
 {
     position.x = prevPosition.x - (velocity[0] * dT) * i;
@@ -59,8 +55,13 @@ void Bullet::interpolate(const float& dT, const float& i)
 void Bullet::draw(SDL_Renderer* r)
 {
     if (type == BULLET) {
-        SDL_SetRenderDrawColor(r, 0, 255, 255, 1.0);
+        SDL_SetRenderDrawColor(r, 0, 255, 0, 1.0);
         SDL_RenderDrawPoint(r, position.x, position.y);
         SDL_SetRenderDrawColor(r, 0, 0, 0, 255);
     }
+}
+
+bool Bullet::isDead() const
+{
+    return dead;
 }

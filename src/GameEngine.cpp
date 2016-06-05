@@ -11,6 +11,42 @@ GameEngine::~GameEngine()
 
 }
 
+void GameEngine::spawnRock(const int& type, const int& number, const float& x, const float& y)
+{
+    for (int numRocks = 0; numRocks != number; numRocks++) {
+        SDL_Point tempPos;
+        if (x == 0.0 && y == 00) {
+            tempPos = {rand() % 700 + 100, rand() % 500 + 100};
+            if (tempPos.x < player.getPosition().x + 100 || tempPos.x > player.getPosition().x - 100 ||
+                tempPos.y < player.getPosition().y + 100 || tempPos.y > player.getPosition().y - 100) {
+                tempPos.x += 200;
+                tempPos.y -= 200;
+            }
+        } else {
+            tempPos = {int(x), int(y)};
+        }
+        float tempVel[2];
+        if (rand() % 2 + 1 == 2) {
+            tempVel[0] = rand() % 25 + 15;
+        } else {
+            tempVel[0] = (rand()%25 + 15) * -1;
+        }
+        if (rand() % 2 + 1 == 2) {
+            tempVel[1] = rand() % 25 + 15;
+        } else {
+            tempVel[1] = (rand() % 25 + 15) * -1;
+        }
+
+        std::stringstream number;
+        number << rockNum;
+        std::string name = "rock" + number.str();
+        Rock tempRock = {tempPos, tempVel[0], tempVel[1], type, rockNum};
+
+        rocks.insert(std::pair<std::string, Rock>(name, tempRock));
+        rockNum++;
+    }
+}
+
 void GameEngine::actionShip(const int& action, bool down)
 {
     if (down) {
@@ -51,42 +87,6 @@ void GameEngine::actionShip(const int& action, bool down)
             player.setAlive(true);
             break;
         }
-    }
-}
-
-void GameEngine::spawnRock(const int& type, const int& number, const float& x, const float& y)
-{
-    for (int numRocks = 0; numRocks != number; numRocks++) {
-        SDL_Point tempPos;
-        if (x == 0.0 && y == 00) {
-            tempPos = {rand() % 700 + 100, rand() % 500 + 100};
-            if (tempPos.x < player.getPosition().x + 100 || tempPos.x > player.getPosition().x - 100 ||
-                tempPos.y < player.getPosition().y + 100 || tempPos.y > player.getPosition().y - 100) {
-                tempPos.x += 200;
-                tempPos.y -= 200;
-            }
-        } else {
-            tempPos = {int(x), int(y)};
-        }
-        float tempVel[2];
-        if (rand() % 2 + 1 == 2) {
-            tempVel[0] = rand() % 25 + 15;
-        } else {
-            tempVel[0] = (rand()%25 + 15) * -1;
-        }
-        if (rand() % 2 + 1 == 2) {
-            tempVel[1] = rand() % 25 + 15;
-        } else {
-            tempVel[1] = (rand() % 25 + 15) * -1;
-        }
-
-        std::stringstream number;
-        number << rockNum;
-        std::string name = "rock" + number.str();
-        Rock tempRock = {tempPos, tempVel[0], tempVel[1], type, rockNum};
-
-        rocks.insert(std::pair<std::string, Rock>(name, tempRock));
-        rockNum++;
     }
 }
 

@@ -1,14 +1,13 @@
 #pragma once
 
 #include <iostream>
-#include <map>
-#include <string>
 #include <sstream>
-#include <cstdlib>
+#include <string>
 #include <cmath>
+#include <map>
 
-#include "../include/Project.h"
-#include "../include/RockSettings.h"
+#include "Project.h"
+#include "RockSettings.h"
 #include "Globals.h"
 #include "GameObject.h"
 
@@ -18,22 +17,23 @@ public:
     Rock(SDL_Point p, const float& vX, const float& vY, const int& t, const int& n);
     ~Rock();
 
-    virtual void trace() override;
-    virtual void updatePosition(const float& dT) override;
-    virtual void interpolate(const float& dT, const float& i) override;
-    virtual void draw(SDL_Renderer *r) override;
+    virtual void trace();
+    virtual void updatePosition(const float& dT);
+    virtual void interpolate(const float& dT, const float& i);
+    virtual void draw(SDL_Renderer *r);
 
     inline SDL_Point* getLines() { return lines; }
     void setType(int type) { this->type = type; }
     int getType() { return type; }
-
 private:
     void generate(int radius, double rotAngle);
     void generateDeviation();
+
     int life = 0;
     int num = 0;
-    int rNum = 0;
     int type;
+    SDL_Color color;
+
     double deviation[ROCK_PARTS + 1];
 
     float angleVel = 0.0;

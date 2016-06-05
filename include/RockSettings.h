@@ -1,4 +1,4 @@
-#ifndef ROCKSETTINGS_H
+#pragma once
 #define ROCKSETTINGS_H
 #define ROCK_SMALL_RADIUS 12
 #define ROCK_MED_RADIUS 25
@@ -6,4 +6,3 @@
 #define ROCK_DEVIATION_MIN 0.75
 #define ROCK_DEVIATION_MAX 1.25
 #define ROCK_PARTS 10
-#endif // ROCKSETTINGS_H

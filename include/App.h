@@ -13,7 +13,6 @@ public:
 
     int execute();
     void exit() { running = false; }
-
 private:
     void inputs();
 

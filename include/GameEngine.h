@@ -1,11 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include <string>
 #include <sstream>
+#include <string>
 #include <map>
-#include <cstdlib>
-#include <ctime>
 
 #include "../include/Globals.h"
 #include "../include/Renderer.h"
@@ -26,9 +24,6 @@ public:
     void updatePositions(const float& deltaTime);
     void interpolate(const float& deltaTime, const float& interpolation);
     void draw(Renderer *rend);
-
-    Ship* getShip() { return &player; }
-
 private:
     Ship player;
     std::map<std::string, Rock> rocks;
